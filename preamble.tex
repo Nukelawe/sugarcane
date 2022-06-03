@@ -1,0 +1,175 @@
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage{t1enc}
+
+% AMS packages:
+\usepackage{amsbsy}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsxtra}
+% for comments to work
+\usepackage{verbatim}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue,anchorcolor=blue]{hyperref}
+% other packages
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{cancel} % term cancellations in math mode
+\usepackage{units}
+\usepackage{caption} % For more control over figure captions
+\usepackage{subcaption}
+\usepackage[section]{placeins}
+\usepackage{datatool}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{tikz} % for drawing vector graphics
+\usepackage{tikz-3dplot}
+%\counterwithin{figure}{section}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\captionsetup{width=.9\linewidth}
+\captionsetup{labelfont=bf}
+\captionsetup{font=small}
+
+%% use an external data file
+%\DTLsetseparator{ }
+%\DTLloaddb[noheader, keys={key,value}]{database}{p4.dat}
+%% macro for reading a value from database
+%\newcommand{\dataread}[1]{\DTLfetch{database}{key}{#1}{value}}
+
+% \pagenumbering{gobble} % remove page numbers
+
+\hoffset 0.5cm
+\voffset -0.4cm
+\evensidemargin -0.2in
+\oddsidemargin -0.2in
+\topmargin -0.2in
+\textwidth 6.3in
+\textheight 8.4in
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{.5em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macro definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% operator with description
+\newcommand{\op}[2]{\stackrel{\text{\scriptsize #2}}{#1}}
+% indicator function
+\newcommand{\ind}[1]{\mathbb{I}_{#1}}
+\newcommand{\id}[1]{\mathbbm{1}\!\left({#1}\right)}
+% probability and statistics
+\newcommand{\Prob}[1]{\begingroup
+		\renewcommand\mid{\,|\,}
+		\text{$\mathbb{P}\left(#1\right)$}
+	\endgroup
+}
+\newcommand{\Exp}[1]{\begingroup
+		\renewcommand\mid{\,|\,}
+		\text{$\mathbb{E}\left[#1\right]$}
+	\endgroup
+}
+% Hilbert spaces:
+\newcommand{\hilb}{\mathcal{H}}
+\newcommand{\banH}{\mathcal{B}(\hilb)}
+\newcommand{\fock}{\mathcal{F}}
+% Products:
+\newcommand{\scalpr}[2]{( #1, #2 )}
+\newcommand{\dualpr}[2]{\langle #1, #2 \rangle}
+% Real and imaginary parts
+\newcommand{\re}{{\rm Re\,}}
+\newcommand{\im}{{\rm Im\,}}
+% misc
+\newcommand{\defem}[1]{{\em #1\/}}
+% To define sets:
+\newcommand{\defset}[2]{
+	\left\{ #1 :\, #2\makebox[0pt]{$\displaystyle\phantom{#1}$}\right\}}
+
+% Norms:
+\newcommand{\abs}[1] {\lvert #1 \rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\floor}[1] {\lfloor {#1} \rfloor}
+\newcommand{\ceil}[1]  {\lceil  {#1} \rceil}
+
+% Basic spaces
+\newcommand{\R} {\mathbb{R}}
+\newcommand{\C} {{\mathbb{C}}}
+\newcommand{\N} {\mathbb{N}}
+\newcommand{\Z} {\mathbb{Z}}
+\newcommand{\Q} {\mathbb{Q}}
+\newcommand{\K} {\mathbb{K}}
+\newcommand{\T} {\mathbb{T}}
+
+% differentials
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\DD}{\partial}
+% partial derivatives
+\newcommand{\pder}[2]{\frac{\DD #1}{\DD #2}}
+\newcommand{\pdersq}[2]{\frac{\DD^2 #1}{\DD #2^2}}
+\newcommand{\pderev}[3]{\left.\pder{#1}{#2}\right|_{#3}}
+% total derivatives
+\newcommand{\der}[2]{\frac{\dd #1}{\dd #2}}
+\newcommand{\derev}[3]{\left.\der{#1}{#2}\right|_{#3}}
+% Fonts
+\newcommand{\Acal}{\mathcal{A}}
+\newcommand{\Bcal}{\mathcal{B}}
+\newcommand{\Ccal}{\mathcal{C}}
+\newcommand{\Dcal}{\mathcal{D}}
+\newcommand{\Fcal}{\mathcal{F}}
+\newcommand{\Hcal}{\mathcal{H}}
+\newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Ocal}{\mathcal{O}}
+\newcommand{\Pcal}{\mathcal{P}}
+\newcommand{\Rcal}{\mathcal{R}}
+\newcommand{\Scal}{\mathcal{S}}
+\newcommand{\Tcal}{\mathcal{T}}
+\newcommand{\Ucal}{\mathcal{U}}
+\newcommand{\Vcal}{\mathcal{V}}
+\newcommand{\abf}{{\bf a}}
+\newcommand{\Zcal}{{\cal Z}_{12}}
+\newcommand{\zcal}{z_{12}}
+\newcommand{\hsf}{{\sf h}}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\Xbar}{\bar{X}}
+\newcommand{\xibar}{\bar{\xi }}
+\newcommand{\barh}{\bar{h}}
+\newcommand{\Ubar}{\bar{\cal U}}
+\newcommand{\Vbar}{\bar{\cal V}}
+\newcommand{\Fbar}{\bar{F}}
+\newcommand{\zbar}{\bar{z}}
+\newcommand{\wbar}{\bar{w}}
+\newcommand{\wbartilde}{\tilde{\bar{w}}}
+\newcommand{\barone}{\bar{1}}
+\newcommand{\bartwo}{\bar{2}}
+\newcommand{\nbyn}{N \times N}
+\newcommand{\repres}{\leftrightarrow}
+\newcommand{\Tr}{{\rm Tr}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand{\ninfty}{N \rightarrow \infty}
+\newcommand{\unitk}{{\bf 1}_k}
+\newcommand{\unitm}{{\bf 1}}
+\newcommand{\zerom}{{\bf 0}}
+\newcommand{\unittwo}{{\bf 1}_2}
+\newcommand{\holo}{{\cal U}}
+\newcommand{\bra}{\langle}
+\newcommand{\ket}{\rangle}
+\newcommand{\sgamma}{\sqrt{\gamma}}
+\newcommand{\bfE}{{\bf E}}
+\newcommand{\bfB}{{\bf B}}
+\newcommand{\bfM}{{\bf M}}
+\newcommand{\bfT}{{\bf T}}
+\newcommand{\cl} {\cal l}
+\newcommand{\ctilde}{\tilde{\chi}}
+\newcommand{\ttilde}{\tilde{t}}
+\newcommand{\ptilde}{\tilde{\phi}}
+\newcommand{\utilde}{\tilde{u}}
+\newcommand{\vtilde}{\tilde{v}}
+\newcommand{\wtilde}{\tilde{w}}
+\newcommand{\ztilde}{\tilde{z}}
+
+\selectlanguage{english}
